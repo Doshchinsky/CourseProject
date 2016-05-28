@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "library.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,20 +20,19 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	int height = 1024, length = 1024, amount_of_words = 0;
+	int i, height = 1024, width = 1024, amount_of_strings = 0;
 	
 	char **strings = (char **)malloc(height * sizeof(char *));
-	char *input_word = (char *)malloc(length * sizeof(char));
+	for (i = 0; i < height; i++)
+		strings[i] = (char *)malloc(width * sizeof(char));
 
 	while (!feof(input_file)) {
-		fscanf(input_file, "%s", input_word);
-		strings[amount_of_words] = malloc(sizeof(input_word));
-		strings[amount_of_words] = strdup(input_word);
-		printf("String #%d -> %s\n", amount_of_words + 1, strings[amount_of_words]);
-		amount_of_words++;
+		fgets(strings[amount_of_strings], width, input_file);
+		printf("String #%d -> %s\n", amount_of_strings + 1, strings[amount_of_strings]);
+		amount_of_strings++;
 	}
 	fclose(input_file);
-	free(strings);
 
+	free(strings);
 	return EXIT_SUCCESS;
 }
