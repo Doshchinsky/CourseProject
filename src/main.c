@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	int i, height = 1024, width = 1024, amount_of_strings = 0;
+	int i, j, height = 1024, width = 1024, amount_of_strings = 0;
 	
 	char **strings = (char **)malloc(height * sizeof(char *));
 	for (i = 0; i < height; i++)
@@ -28,11 +28,24 @@ int main(int argc, char *argv[])
 
 	while (!feof(input_file)) {
 		fgets(strings[amount_of_strings], width, input_file);
-		printf("String #%d -> %s\n", amount_of_strings + 1, strings[amount_of_strings]);
 		amount_of_strings++;
 	}
 	fclose(input_file);
 
+	array mass;
+	array_init(&mass);
+	for (i = 0; i < amount_of_strings; i++) {
+		for ( j = 0; j < strlen(strings[i]); j++)
+		{
+			addelement(&mass, strings[i][j]);
+		}
+	}
+
+	printf("<------------------------------------------------------>\n");
+	printf("\tSymbol:\tAmount:\tProbability:\tCode:\n");
+	for (i = 0; i < mass.count; i++)
+		printf("\t%c\t%d\n", mass.arr[i]->symbol, mass.arr[i]->count);
+	printf("<------------------------------------------------------>\n");
 	free(strings);
 	return EXIT_SUCCESS;
 }
