@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "library.h"
+#include "sfcompress.h"
+#include "sfdecompress.h"
 
 int main(int argc, char *argv[])
 {
@@ -59,15 +61,21 @@ int main(int argc, char *argv[])
 		probability[i] /= mass.count;
 	}
 
-	printf("<------------------------------------------------------>\n");
-	printf("\tSymbol:\tAmount:\tProbability:\tCode:\n");
-	for (i = 0; i < mass.count; i++)
-		if (mass.arr[i]->symbol != '\n')
-			printf("\t%c\t%d\t%0.2f\n", mass.arr[i]->symbol, mass.arr[i]->count, probability[i]);
-		else
-			printf("\t \t%d\t%0.2f\n", mass.arr[i]->count, probability[i]);
-	printf("\nTotal number of symbols: %d\n", mass.count);
-	printf("<------------------------------------------------------>\n");
+	if (instruction[1] == 'c') {
+		process_compress(&mass, probability);
+
+		printf("<------------------------------------------------------>\n");
+		printf("\tSymbol:\tAmount:\tProbability:\tCode:\n");
+		for (i = 0; i < mass.count; i++)
+			if (mass.arr[i]->symbol != '\n')
+				printf("\t%c\t%d\t%0.2f\n", mass.arr[i]->symbol, mass.arr[i]->count, probability[i]);
+			else
+				printf("\t \t%d\t%0.2f\n", mass.arr[i]->count, probability[i]);
+		printf("\nTotal number of symbols: %d\n", mass.count);
+		printf("<------------------------------------------------------>\n");
+	} else {
+		process_decompress();
+	}
 	free(strings);
 	return EXIT_SUCCESS;
 }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "library.h"
+#include "sfcompress.h"
 
 void array_init(array *element)
 {
