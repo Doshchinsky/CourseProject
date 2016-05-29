@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	}
 	char instruction[2];
 	strcpy(instruction, argv[1]);
-	if (instruction[1] != 'c' && instruction[1] != 'd') {
+	if ((instruction[1] != 'c' || instruction[1] != 'd') && instruction[0] != '-') {
 		fprintf(stderr, "CourseProject: An error has occured!\nERROR: Wrong instruction!\nHint: Please, check your input value!\n");
 		exit(EXIT_FAILURE);
 	}
@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 	for (i = 0; i < mass.count; i++) {
 		probability[i] = mass.arr[i]->count;
 		probability[i] /= mass.count;
+		probability[i] *= 100;
 	}
 
 	if (instruction[1] == 'c') {
@@ -68,9 +69,9 @@ int main(int argc, char *argv[])
 		printf("\tSymbol:\tAmount:\tProbability:\tCode:\n");
 		for (i = 0; i < mass.count; i++)
 			if (mass.arr[i]->symbol != '\n')
-				printf("\t%c\t%d\t%0.2f\n", mass.arr[i]->symbol, mass.arr[i]->count, probability[i]);
+				printf("\t%c\t%d\t%0.0f\n", mass.arr[i]->symbol, mass.arr[i]->count, probability[i]);
 			else
-				printf("\t \t%d\t%0.2f\n", mass.arr[i]->count, probability[i]);
+				printf("\t \t%d\t%0.0f\n", mass.arr[i]->count, probability[i]);
 		printf("\nTotal number of symbols: %d\n", mass.count);
 		printf("<------------------------------------------------------>\n");
 	} else {
