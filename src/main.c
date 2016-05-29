@@ -40,11 +40,21 @@ int main(int argc, char *argv[])
 			addelement(&mass, strings[i][j]);
 		}
 	}
+	
+	double probability[mass.count];
+	for (i = 0; i < mass.count; i++) {
+		probability[i] = mass.arr[i]->count;
+		probability[i] /= mass.count;
+	}
 
 	printf("<------------------------------------------------------>\n");
 	printf("\tSymbol:\tAmount:\tProbability:\tCode:\n");
 	for (i = 0; i < mass.count; i++)
-		printf("\t%c\t%d\n", mass.arr[i]->symbol, mass.arr[i]->count);
+		if (mass.arr[i]->symbol != '\n')
+			printf("\t%c\t%d\t%0.2f\n", mass.arr[i]->symbol, mass.arr[i]->count, probability[i]);
+		else
+			printf("\t \t%d\t%0.2f\n", mass.arr[i]->count, probability[i]);
+	printf("\nTotal number of symbols: %d\n", mass.count);
 	printf("<------------------------------------------------------>\n");
 	free(strings);
 	return EXIT_SUCCESS;
