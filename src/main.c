@@ -7,11 +7,23 @@
 int main(int argc, char *argv[])
 {
 	if (argc < 2) {
+		fprintf(stderr, "CourseProject: An error has occured!\nERROR: Missing the instruction for the program!\nHint: Please, try again!\n");
+		exit(EXIT_FAILURE);
+	}
+	char instruction[2];
+	strcpy(instruction, argv[1]);
+	if (instruction[1] != 'c' && instruction[1] != 'd') {
+		fprintf(stderr, "CourseProject: An error has occured!\nERROR: Wrong instruction!\nHint: Please, check your input value!\n");
+		exit(EXIT_FAILURE);
+	}
+	printf("%s\n", instruction);
+
+	if (argc < 3) {
 		fprintf(stderr, "CourseProject: An error has occured!\nERROR: Missing input file name!\nHint: Please, try again!\n");
 		exit(EXIT_FAILURE);
 	}
 	char filename[10] = "./";
-	strcat(filename, argv[1]);
+	strcat(filename, argv[2]);
 
 	FILE *input_file;
 	input_file = fopen(filename, "r");
@@ -21,7 +33,7 @@ int main(int argc, char *argv[])
 	}
 
 	int i, j, height = 1024, width = 1024, amount_of_strings = 0;
-	
+
 	char **strings = (char **)malloc(height * sizeof(char *));
 	for (i = 0; i < height; i++)
 		strings[i] = (char *)malloc(width * sizeof(char));
@@ -40,7 +52,7 @@ int main(int argc, char *argv[])
 			addelement(&mass, strings[i][j]);
 		}
 	}
-	
+
 	double probability[mass.count];
 	for (i = 0; i < mass.count; i++) {
 		probability[i] = mass.arr[i]->count;
