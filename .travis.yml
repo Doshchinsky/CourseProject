@@ -1,0 +1,3 @@
+langauge: c
+script: make
+compiler: gcc
