@@ -1,0 +1,3 @@
+#ignore object and exe files
+obj
+bin
